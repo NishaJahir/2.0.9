@@ -73,11 +73,15 @@ class CaptureEventProcedure
 				  {
 					$status = $proper->value;
 				  }
+				  if ($proper->typeId == 21) 
+				  {
+					 $invoiceDetails = $proper->value;
+				  }
 			}
 		}
 
 	    if(in_array($status, ['85', '91', '98', '99'])) {
-        $this->paymentService->doCaptureVoid($order, $paymentDetails, $tid, $key, true);
+        $this->paymentService->doCaptureVoid($order, $paymentDetails, $tid, $key, $invoiceDetails, true);
 	    } 
 
     }

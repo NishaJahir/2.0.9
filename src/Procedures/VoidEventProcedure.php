@@ -79,7 +79,7 @@ class VoidEventProcedure
 		}
 
 	    if(in_array($status, ['85', '91', '98', '99'])) {
-        $this->paymentService->doCaptureVoid($order, $paymentDetails, $tid, $key);
+        $this->paymentService->doCaptureVoid($order, $paymentDetails, $tid, $key, '');
 	    } 
     }
 }

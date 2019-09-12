@@ -740,6 +740,8 @@ class PaymentService
             
             $transactionComments = '';
 		    if($responseData['tid_status'] == '100') {
+			    $bankDetails = json_decode($invoiceDetails);
+			    $this->getLogger(__METHOD__)->error('bank', $bankDetails);
 			   $transactionComments .= PHP_EOL . sprintf($this->paymentHelper->getTranslatedText('transaction_confirmation', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));
            } else {
             $transactionComments .= PHP_EOL . sprintf($this->paymentHelper->getTranslatedText('transaction_cancel', $paymentRequestData['lang']), date('d.m.Y'), date('H:i:s'));

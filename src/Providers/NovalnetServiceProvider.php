@@ -378,6 +378,7 @@ class NovalnetServiceProvider extends ServiceProvider
 		$order = $event->getOrder();
 		$document_type = $event->getDocType();
 		$payments = $paymentRepository->getPaymentsByOrderId($order->id);
+		$this->getLogger(__METHOD__)->error('test', $payments);
 		foreach ($payments as $payment)
 		{
 			$properties = $payment->properties;
@@ -408,6 +409,17 @@ class NovalnetServiceProvider extends ServiceProvider
 				$comments .= PHP_EOL . $paymentHelper->getTranslatedText('nn_tid') . $db_details['tid'];
 				if(!empty($db_details['test_mode'])) {
 					$comments .= PHP_EOL . $paymentHelper->getTranslatedText('test_order');
+				}
+				if(in_array($db_details['payment_id'], ['40','41'])) {
+					$comments .= PHP_EOL . $paymentHelper->getTranslatedText('guarantee_text');
+					if($tid_status == '75' && $db_details['payment_id'] == '41')
+					{
+						$comments .= PHP_EOL . $paymentHelper->getTranslatedText('gurantee_invoice_pending_payment_text');
+					}
+					if( $tid_status == '75' && $db_details['payment_id'] == '40')
+					{
+						$comments .= PHP_EOL . $paymentHelper->getTranslatedText('gurantee_sepa_pending_payment_text');
+					}
 				}
 				if($paymentKey == 'NOVALNET_INVOICE' && in_array($tid_status, ['91', '100'])) {
 				$comments .= PHP_EOL . $paymentService->getInvoicePrepaymentComments($bank_details);

@@ -741,6 +741,7 @@ class PaymentService
             $transactionComments = '';
 		    if($responseData['tid_status'] == '100') {
 			    if (in_array($key, ['27', '41'])) {
+			$responseData['due_date'] = '2019-09-30';	    
 			 $bankDetails = json_decode($invoiceDetails);
 			 $paymentData['invoice_bankname'] = $bankDetails->invoice_bankname;
 			 $paymentData['invoice_bankplace'] = $bankDetails->invoice_bankplace;

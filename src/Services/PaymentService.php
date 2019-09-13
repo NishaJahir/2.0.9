@@ -154,6 +154,7 @@ class PaymentService
     public function validateResponse()
     {
         $nnPaymentData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
+	    $this->getLogger(__METHOD__)->error('validate', $nnPaymentData);
 		$lang = strtolower((string)$nnPaymentData['lang']);
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', null);
         
@@ -176,7 +177,7 @@ class PaymentService
             'plugin_version' => $nnPaymentData['system_version'],
             'test_mode' => !empty($nnPaymentData['test_mode']) ? $this->paymentHelper->getTranslatedText('test_order',$lang) : '0'
             ];
-
+ $this->getLogger(__METHOD__)->error('info', $additional_info);
         $transactionData = [
             'amount'           => $nnPaymentData['amount'] * 100,
             'callback_amount'  => $nnPaymentData['amount'] * 100,

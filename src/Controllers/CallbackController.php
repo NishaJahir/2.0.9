@@ -418,7 +418,7 @@ class CallbackController extends Controller
                         
                     // Checks Guaranteed Invoice
                         if( in_array ( $this->aryCaptureParams['payment_type'], [ 'GUARANTEED_INVOICE', 'INVOICE_START' ] ) ) {
-                            
+   
                             // Checking for Invoice Guarantee
                             
                             $callbackComments = '</br>' . sprintf($this->paymentHelper->getTranslatedText('callback_order_confirmation_text',$orderLanguage), date('d.m.Y'), date('H:i:s'));                            
@@ -436,13 +436,10 @@ class CallbackController extends Controller
                                 }
                                 $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
                             }
-                        
                             $db_details = $this->paymentService->getDatabaseValues($nnTransactionHistory->orderNo);
-                             $this->getLogger(__METHOD__)->error('db', $db_details);
                             if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41'])) {
                                 if (in_array($this->aryCaptureParams['tid_status'], ['91', '100'] ) && in_array ($db_details['payment_id'], [ '27', '41']) ) {
-                                     $this->getLogger(__METHOD__)->error('enter', $db_details['payment_id']);  
-                                    $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
+                                        $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
                                         $bankDetails = json_decode($paymentDetails);
                                         $paymentData['invoice_bankname'] = $bankDetails->invoice_bankname;
                                         $paymentData['invoice_bankplace'] = $bankDetails->invoice_bankplace;
@@ -458,7 +455,7 @@ class CallbackController extends Controller
                                         $paymentData['tid']         = $this->aryCaptureParams['tid'];
                                         $paymentData['order_no']    = $nnTransactionHistory->orderNo;
                                         $paymentData['mop']         = $nnTransactionHistory->mopId;
-                                        $this->paymentHelper->createPlentyPayment($paymentData);
+                                    $this->paymentHelper->createPlentyPayment($paymentData);
                             }
                             
                     } 

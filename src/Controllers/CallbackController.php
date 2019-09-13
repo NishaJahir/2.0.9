@@ -408,28 +408,7 @@ class CallbackController extends Controller
                     if(in_array($this->aryCaptureParams['tid_status'], ['91', '99']) && $transactionStatus == '75') {
                        
                         $callbackComments = '</br>' . sprintf($this->paymentHelper->getTranslatedText('callback_pending_to_onhold_status_change',$orderLanguage), $this->aryCaptureParams['tid'], date('d.m.Y'), date('H:i:s'));
-                        if ($this->aryCaptureParams['tid_status'] == '91') {
-                            $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
-                            $bankDetails = json_decode($paymentDetails);
-                            $invoicePrepaymentDetails =  [
-                                  'invoice_bankname'  => $bankDetails->invoice_bankname,
-                                  'invoice_bankplace' => $bankDetails->invoice_bankplace,
-                                  'amount'            => $this->aryCaptureParams['amount'] / 100,
-                                  'currency'          => $this->aryCaptureParams['currency'],
-                                  'tid'               => $this->aryCaptureParams['tid'],
-                                  'invoice_iban'      => $bankDetails->invoice_iban,
-                                  'invoice_bic'       => $bankDetails->invoice_bic,
-                                  'due_date'          => $this->aryCaptureParams['due_date'],
-                                  'product'           => $this->aryCaptureParams['product_id'],
-                                  'order_no'          => $nnTransactionHistory->orderNo,
-                                  'tid_status'        => $this->aryCaptureParams['tid_status'],
-                                  'invoice_type'      => 'INVOICE',
-                                  'test_mode'         => $this->aryCaptureParams['test_mode'],
-                                  'invoice_account_holder' => $bankDetails->invoice_account_holder
-                                ];
-                            $transactionDetails = $this->paymentService->getInvoicePrepaymentComments($invoicePrepaymentDetails);
-                            
-                        }
+                        
                         $orderStatus = $this->config->get('Novalnet.novalnet_onhold_confirmation_status'); 
                         $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
             
@@ -439,28 +418,6 @@ class CallbackController extends Controller
                         
                     // Checks Guaranteed Invoice
                         if( in_array ( $this->aryCaptureParams['payment_type'], [ 'GUARANTEED_INVOICE', 'INVOICE_START' ] ) ) {
-                            if ($this->aryCaptureParams['tid_status'] == '100' && $transactionStatus == '75') {
-                            $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
-                            $bankDetails = json_decode($paymentDetails);
-                            $invoicePrepaymentDetails =  [
-                                  'invoice_bankname'  => $bankDetails->invoice_bankname,
-                                  'invoice_bankplace' => $bankDetails->invoice_bankplace,
-                                  'amount'            => $this->aryCaptureParams['amount'] / 100,
-                                  'currency'          => $this->aryCaptureParams['currency'],
-                                  'tid'               => $this->aryCaptureParams['tid'],
-                                  'invoice_iban'      => $bankDetails->invoice_iban,
-                                  'invoice_bic'       => $bankDetails->invoice_bic,
-                                  'due_date'          => $this->aryCaptureParams['due_date'],
-                                  'product'           => $this->aryCaptureParams['product_id'],
-                                  'order_no'          => $nnTransactionHistory->orderNo,
-                                  'tid_status'        => $this->aryCaptureParams['tid_status'],
-                                  'invoice_type'      => 'INVOICE',
-                                  'test_mode'         => $this->aryCaptureParams['test_mode'],
-                                  'invoice_account_holder' => $bankDetails->invoice_account_holder
-                                ];
-                            $transactionDetails = $this->paymentService->getInvoicePrepaymentComments($invoicePrepaymentDetails);
-                            
-                        }
                             
                             // Checking for Invoice Guarantee
                             
@@ -479,13 +436,28 @@ class CallbackController extends Controller
                                 }
                                 $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
                             }
-                            if(in_array ( $this->aryCaptureParams['payment_type'], [ 'GUARANTEED_DIRECT_DEBIT_SEPA', 'DIRECT_DEBIT_SEPA', 'GUARANTEED_INVOICE'] )) {
-                            $paymentData['currency']    = $this->aryCaptureParams['currency'];
-                            $paymentData['paid_amount'] = (float) ($this->aryCaptureParams['amount'] / 100);
-                            $paymentData['tid']         = $this->aryCaptureParams['tid'];
-                            $paymentData['order_no']    = $nnTransactionHistory->orderNo;
-                            $paymentData['mop']         = $nnTransactionHistory->mopId;
-                            $this->paymentHelper->createPlentyPayment($paymentData);
+                                                        $db_details = $this->paymentService->getDatabaseValues($nnTransactionHistory->orderNo);
+                            if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41'])) {
+                                if (in_array($this->aryCaptureParams['tid_status'], ['91', '100'] ) && in_array ($db_details['payment_id'], [ '27', '41']) ) {
+                                        $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
+                                        $bankDetails = json_decode($paymentDetails);
+                                        $paymentData['invoice_bankname'] = $bankDetails->invoice_bankname;
+                                        $paymentData['invoice_bankplace'] = $bankDetails->invoice_bankplace;
+                                        $paymentData['invoice_iban'] = $bankDetails->invoice_iban;
+                                        $paymentData['invoice_bic'] = $bankDetails->invoice_bic;
+                                        $paymentData['due_date'] = $this->aryCaptureParams['due_date'];
+                                        $paymentData['invoice_type'] = $bankDetails->invoice_type;
+                                        $paymentData['invoice_account_holder'] = $bankDetails->invoice_account_holder;
+                                        $paymentData['payment_id'] = $db_details['payment_id'];
+                                }
+                                if(in_array ($db_details['payment_id'], ['37', '40', '41'])) {
+                                        $paymentData['currency']    = $this->aryCaptureParams['currency'];
+                                        $paymentData['paid_amount'] = (float) ($this->aryCaptureParams['amount'] / 100);
+                                        $paymentData['tid']         = $this->aryCaptureParams['tid'];
+                                        $paymentData['order_no']    = $nnTransactionHistory->orderNo;
+                                        $paymentData['mop']         = $nnTransactionHistory->mopId;
+                                 }
+                                    $this->paymentHelper->createPlentyPayment($paymentData);
                             }
                             
                     } 

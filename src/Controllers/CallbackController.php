@@ -437,7 +437,8 @@ class CallbackController extends Controller
                                 $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
                             }
                             $db_details = $this->paymentService->getDatabaseValues($nnTransactionHistory->orderNo);
-                            if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41'])) {
+                        $this->getLogger(__METHOD__)->error('db', $db_details);
+                        if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41'])) {
                                 if (in_array($this->aryCaptureParams['tid_status'], ['91', '100'] ) && in_array ($db_details['payment_id'], [ '27', '41']) ) {
                                         $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
                                         $bankDetails = json_decode($paymentDetails);

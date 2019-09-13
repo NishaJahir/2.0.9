@@ -450,14 +450,12 @@ class CallbackController extends Controller
                                         $paymentData['invoice_account_holder'] = $bankDetails->invoice_account_holder;
                                         $paymentData['payment_id'] = $db_details['payment_id'];
                                 }
-                                if(in_array ($db_details['payment_id'], ['37', '40', '41'])) {
                                         $paymentData['currency']    = $this->aryCaptureParams['currency'];
-                                        $paymentData['paid_amount'] = (float) ($this->aryCaptureParams['amount'] / 100);
+                                        $paymentData['paid_amount'] = $db_details['payment_id'] == '27' ? '0' : (float) ($this->aryCaptureParams['amount'] / 100);
                                         $paymentData['tid']         = $this->aryCaptureParams['tid'];
                                         $paymentData['order_no']    = $nnTransactionHistory->orderNo;
                                         $paymentData['mop']         = $nnTransactionHistory->mopId;
-                                 }
-                                    $this->paymentHelper->createPlentyPayment($paymentData);
+                                        $this->paymentHelper->createPlentyPayment($paymentData);
                             }
                             
                     } 

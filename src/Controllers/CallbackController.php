@@ -436,7 +436,7 @@ class CallbackController extends Controller
                                 }
                                 $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
                             }
-                        $this->aryCaptureParams['due_date'] = '2019-09-27';
+                        
                             $db_details = $this->paymentService->getDatabaseValues($nnTransactionHistory->orderNo);
                             if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41'])) {
                                 if (in_array($this->aryCaptureParams['tid_status'], ['91', '100'] ) && in_array ($db_details['payment_id'], [ '27', '41']) ) {

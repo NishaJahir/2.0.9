@@ -435,8 +435,9 @@ class CallbackController extends Controller
                                     $orderStatus = $this->config->get('Novalnet.novalnet_sepa_order_completion_status'); 
                                 }
                                 $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
-                            }
-                            $db_details = $this->paymentService->getDatabaseValues($nnTransactionHistory->orderNo);
+                            } 
+                    } 
+                    $db_details = $this->paymentService->getDatabaseValues($nnTransactionHistory->orderNo);
                             if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41'])) {
                                 if (in_array($this->aryCaptureParams['tid_status'], ['91', '100'] ) && in_array ($db_details['payment_id'], [ '27', '41']) ) {
                                         $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
@@ -445,7 +446,9 @@ class CallbackController extends Controller
                                         $paymentData['invoice_bankplace'] = $bankDetails->invoice_bankplace;
                                         $paymentData['invoice_iban'] = $bankDetails->invoice_iban;
                                         $paymentData['invoice_bic'] = $bankDetails->invoice_bic;
+                                        if (!empty($this->aryCaptureParams['due_date'])) {
                                         $paymentData['due_date'] = $this->aryCaptureParams['due_date'];
+                                        }
                                         $paymentData['invoice_type'] = $bankDetails->invoice_type;
                                         $paymentData['invoice_account_holder'] = $bankDetails->invoice_account_holder;
                                         $paymentData['payment_id'] = $db_details['payment_id'];
@@ -456,9 +459,7 @@ class CallbackController extends Controller
                                         $paymentData['order_no']    = $nnTransactionHistory->orderNo;
                                         $paymentData['mop']         = $nnTransactionHistory->mopId;
                                     $this->paymentHelper->createPlentyPayment($paymentData);
-                            }
-                            
-                    } 
+                    }
                     $this->paymentHelper->updatePayments($this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status'], $nnTransactionHistory->orderNo);
                     return $this->renderTemplate($callbackComments);
                 }  elseif('PRZELEWY24' == $this->aryCaptureParams['payment_type'] && (!in_array($this->aryCaptureParams['tid_status'], ['100','86']) || '100' != $this->aryCaptureParams['status'])){

@@ -403,17 +403,17 @@ class CallbackController extends Controller
                 }  elseif (in_array($this->aryCaptureParams['payment_type'], ['INVOICE_START', 'GUARANTEED_INVOICE', 'DIRECT_DEBIT_SEPA', 'GUARANTEED_DIRECT_DEBIT_SEPA'] )) {
                 
                     $transactionStatus = $this->payment_details($nnTransactionHistory->orderNo);
-                    $saveAdditionData = 'false';
+                    $saveAdditionData = false;
                     // Checks for Guarantee Onhold
                     if(in_array($this->aryCaptureParams['tid_status'], ['91', '99']) && $transactionStatus == '75') {
-                        $saveAdditionData = 'true';
+                        $saveAdditionData = true;
                         $callbackComments = '</br>' . sprintf($this->paymentHelper->getTranslatedText('callback_pending_to_onhold_status_change',$orderLanguage), $this->aryCaptureParams['tid'], date('d.m.Y'), date('H:i:s'));
                         
                         $orderStatus = $this->config->get('Novalnet.novalnet_onhold_confirmation_status'); 
                        // $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
             
                     } elseif ($this->aryCaptureParams['tid_status'] == '100' && in_array($transactionStatus, [ '75', '91', '99' ])) {
-                        $saveAdditionData = 'true';
+                        $saveAdditionData = true;
                         $paymentConfigName = substr($nnTransactionHistory->paymentName, 9);
                         $orderStatus = $this->config->get('Novalnet.novalnet_'.$paymentConfigName.'_order_completion_status');  
                         

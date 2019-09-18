@@ -413,7 +413,7 @@ class CallbackController extends Controller
                        // $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
             
                     } elseif ($this->aryCaptureParams['tid_status'] == '100' && in_array($transactionStatus, [ '75', '91', '99' ])) {
-                        $saveAdditionData = 'false';
+                        $saveAdditionData = 'true';
                         $paymentConfigName = substr($nnTransactionHistory->paymentName, 9);
                         $orderStatus = $this->config->get('Novalnet.novalnet_'.$paymentConfigName.'_order_completion_status');  
                         

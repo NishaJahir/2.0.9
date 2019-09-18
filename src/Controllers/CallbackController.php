@@ -403,16 +403,17 @@ class CallbackController extends Controller
                 }  elseif (in_array($this->aryCaptureParams['payment_type'], ['INVOICE_START', 'GUARANTEED_INVOICE', 'DIRECT_DEBIT_SEPA', 'GUARANTEED_DIRECT_DEBIT_SEPA'] )) {
                 
                     $transactionStatus = $this->payment_details($nnTransactionHistory->orderNo);
-                           
+                    $saveAdditionData = 'false';
                     // Checks for Guarantee Onhold
                     if(in_array($this->aryCaptureParams['tid_status'], ['91', '99']) && $transactionStatus == '75') {
-                       
+                        $saveAdditionData = 'true';
                         $callbackComments = '</br>' . sprintf($this->paymentHelper->getTranslatedText('callback_pending_to_onhold_status_change',$orderLanguage), $this->aryCaptureParams['tid'], date('d.m.Y'), date('H:i:s'));
                         
                         $orderStatus = $this->config->get('Novalnet.novalnet_onhold_confirmation_status'); 
-                        $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
+                       // $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
             
                     } elseif ($this->aryCaptureParams['tid_status'] == '100' && in_array($transactionStatus, [ '75', '91', '99' ])) {
+                        $saveAdditionData = 'false';
                         $paymentConfigName = substr($nnTransactionHistory->paymentName, 9);
                         $orderStatus = $this->config->get('Novalnet.novalnet_'.$paymentConfigName.'_order_completion_status');  
                         
@@ -427,18 +428,18 @@ class CallbackController extends Controller
                                 
                             }   
                             
-                            $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float) $orderStatus);
+                           // $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float) $orderStatus);
                     } elseif ( in_array ( $this->aryCaptureParams['payment_type'], [ 'GUARANTEED_DIRECT_DEBIT_SEPA', 'DIRECT_DEBIT_SEPA' ] ) ) {
                               
                                 $callbackComments = '</br>' . sprintf($this->paymentHelper->getTranslatedText('callback_order_confirmation_text',$orderLanguage), $this->aryCaptureParams['tid'], date('d.m.Y'), date('H:i:s'));
                                 if ($transactionStatus == '75' && $this->aryCaptureParams['tid_status'] == '100') {
                                     $orderStatus = $this->config->get('Novalnet.novalnet_sepa_order_completion_status'); 
                                 }
-                                $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
+                               // $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
                             } 
                     } 
                     $db_details = $this->paymentService->getDatabaseValues($nnTransactionHistory->orderNo);
-                            if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41'])) {
+                            if(in_array ($db_details['payment_id'], [ '27', '37', '40', '41']) && $saveAdditionData) {
                                 if (in_array($this->aryCaptureParams['tid_status'], ['91', '100'] ) && in_array ($db_details['payment_id'], [ '27', '41']) ) {
                                         $paymentDetails = $this->payment_details($nnTransactionHistory->orderNo, true);
                                         $bankDetails = json_decode($paymentDetails);
@@ -460,6 +461,7 @@ class CallbackController extends Controller
                                         $paymentData['mop']         = $nnTransactionHistory->mopId;
                                     $this->paymentHelper->createPlentyPayment($paymentData);
                     }
+                    $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
                     $this->paymentHelper->updatePayments($this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status'], $nnTransactionHistory->orderNo);
                     return $this->renderTemplate($callbackComments);
                 }  elseif('PRZELEWY24' == $this->aryCaptureParams['payment_type'] && (!in_array($this->aryCaptureParams['tid_status'], ['100','86']) || '100' != $this->aryCaptureParams['status'])){

@@ -460,6 +460,9 @@ class CallbackController extends Controller
                                         $paymentData['tid']         = $this->aryCaptureParams['tid'];
                                         $paymentData['order_no']    = $nnTransactionHistory->orderNo;
                                         $paymentData['mop']         = $nnTransactionHistory->mopId;
+                                if ($db_details['payment_id'] == '27' || $db_details['payment_id'] == '41' && $this->aryCaptureParams['tid_status'] == '91' || $db_details['payment_id'] == '40' && $this->aryCaptureParams['tid_status'] == '99') {
+                                        $paymentData['paid_amount'] = '0';
+                                        }
                                     $this->paymentHelper->createPlentyPayment($paymentData);
                     }
                     $this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);

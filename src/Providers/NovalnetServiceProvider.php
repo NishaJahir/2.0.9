@@ -422,7 +422,7 @@ class NovalnetServiceProvider extends ServiceProvider
 					}
 				}
 				if($paymentKey == 'NOVALNET_INVOICE' && in_array($tid_status, ['91', '100'])) {
-				$comments .= PHP_EOL . $paymentService->getInvoicePrepaymentComments($bank_details, true);
+				$comments .= PHP_EOL . $paymentService->getInvoicePrepaymentComments($bank_details, true, false);
 				}
 			        if($paymentKey == 'NOVALNET_CASHPAYMENT') {
 				$comments .= PHP_EOL . $cashpayment_comments;	

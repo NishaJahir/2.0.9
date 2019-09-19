@@ -258,14 +258,14 @@ class PaymentService
      * @param array $requestData
      * @return string
      */
-    public function getInvoicePrepaymentComments($requestData)
+    public function getInvoicePrepaymentComments($requestData, $dueDate = false)
     {     
     $comments = '';
     $comments .= PHP_EOL . PHP_EOL . $this->paymentHelper->getTranslatedText('transfer_amount_text');
     $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('account_holder_novalnet') . $requestData['invoice_account_holder'];
     $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('iban') . $requestData['invoice_iban'];
     $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('bic') . $requestData['invoice_bic'];
-        if($requestData['due_date'])
+        if($requestData['due_date'] && $dueDate)
         {
         $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('due_date') . date('Y/m/d', (int)strtotime($requestData['due_date']));
         }

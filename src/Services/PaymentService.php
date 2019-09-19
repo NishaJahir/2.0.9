@@ -258,8 +258,9 @@ class PaymentService
      * @param array $requestData
      * @return string
      */
-    public function getInvoicePrepaymentComments($requestData, $dueDate = false)
-    {     
+    public function getInvoicePrepaymentComments($requestData, $dueDate = false, $amount = false)
+    {  
+	    $this->getLogger(__METHOD__)->error('comm', $requestData);
     $comments = '';
     $comments .= PHP_EOL . PHP_EOL . $this->paymentHelper->getTranslatedText('transfer_amount_text');
     $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('account_holder_novalnet') . $requestData['invoice_account_holder'];
@@ -270,8 +271,9 @@ class PaymentService
         $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('due_date') . date('Y/m/d', (int)strtotime($requestData['due_date']));
         }
     $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('bank') . $requestData['invoice_bankname']. ' ' . $requestData['invoice_bankplace'];
+    if ( $amount) {
     $comments .= PHP_EOL . $this->paymentHelper->getTranslatedText('amount') . $requestData['amount'] . ' ' . $requestData['currency'];
-
+    }
     $comments .= PHP_EOL . PHP_EOL .$this->paymentHelper->getTranslatedText('any_one_reference_text');
     $comments .= PHP_EOL. $this->paymentHelper->getTranslatedText('payment_reference1') .' ' . 'TID '. $requestData['tid']. PHP_EOL . $this->paymentHelper->getTranslatedText('payment_reference2').' ' .('BNR-' . $requestData['product'] . '-' . $requestData['order_no']). PHP_EOL;
     $comments .= PHP_EOL;

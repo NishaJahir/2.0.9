@@ -12,24 +12,20 @@
 				<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
 				<input type="hidden" name="nn_invoice_valid_dob_msg" id="nn_invoice_valid_dob_msg" value="{{trans("Novalnet::PaymentMethod.doberror")}}">
 				<div class="row">
-					<div class="col-xs-12">
-						<div class="row">
-						<div data-model="nn_invoice_birthday" class="input-unit">
-							
-								
-				  <label for="nn_invoice_birthday">{{trans("Novalnet::PaymentMethod.birthdate_label")}}*</label>
-	<div class="col-sm-4"><input type="text" name="nn_date" id="nn_date" placeholder="DD" size="2" >-</div>
-	<div class="col-sm-4"><input type="text" name="nn_month" id="nn_month" placeholder="MM" size="2" >-</div>
-	<div class="col-sm-4"><input type="text" name="nn_year" id="nn_year" placeholder="YYYY" size="4" >-</div>
-				 
-
-						 </div>
-							
-					
-						</div> 
-					</div>
+				<div data-model="nn_invoice_birthday" class="input-unit">
+				<label for="nn_invoice_birthday">{{trans("Novalnet::PaymentMethod.birthdate_label")}}*</label>
+	<div class="col-sm-4">
+		<input type="text" name="nn_date" id="nn_date" maxlength="2" placeholder="DD" class="form-control">
+	</div>
+	<div class="col-sm-4">
+		<input type="text" name="nn_month" id="nn_month" maxlength="2" placeholder="MM" class="form-control">
+  	</div>
+	<div class="col-sm-4">
+		<input type="text" name="nn_year" id="nn_year" maxlength="4" placeholder="YYYY" class="form-control">
+	</div>
+				</div>
 				</div> 
-			
+					
 		</fieldset>
 	</div>
 	<div class="modal-footer">

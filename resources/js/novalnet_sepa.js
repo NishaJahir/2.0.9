@@ -16,5 +16,7 @@ jQuery(document).ready( function() {
 	jQuery('#nn_sepa_form').on('submit',function(){
 		$('#novalnet_form_btn').attr('disabled',true);		
 	});
+	
+	jQuery('#nn_sepa_birthday').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
   
 });

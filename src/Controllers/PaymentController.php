@@ -173,7 +173,16 @@ class PaymentController extends Controller
             $guranteeStatus = $this->paymentService->getGuaranteeStatus($this->basketRepository->load(), $requestData['paymentKey']);                        
             
             if('guarantee' == $guranteeStatus)
-            {          
+            {      
+                
+                if($requestData['paymentKey'] == 'NOVALNET_SEPA') {
+                   
+                 $requestData['nn_sepa_birthday'] =    $requestData['nn_sepa_year'].'-'.$requestData['nn_sepa_month'].'-'.$requestData['nn_sepa_date'];  
+                 $this->getLogger(__METHOD__)->error('sepa', $requestData['nn_sepa_birthday']);
+                } else {
+                 $requestData['nn_invoice_birthday'] =    $requestData['nn_invoice_year'].'-'.$requestData['nn_invoice_month'].'-'.$requestData['nn_invoice_date'];   
+                $this->getLogger(__METHOD__)->error('sepa', $requestData['nn_invoice_birthday']);
+                }
                 $birthday     = ( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) ? $requestData['nn_sepa_birthday'] : $requestData['nn_invoice_birthday'];
                 $force_status = ( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) ? 'Novalnet.novalnet_sepa_payment_guarantee_force_active' : 'Novalnet.novalnet_invoice_payment_guarantee_force_active';               
                 
@@ -207,7 +216,7 @@ class PaymentController extends Controller
                     if( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) {
                     $serverRequestData['data']['payment_type'] = 'GUARANTEED_DIRECT_DEBIT_SEPA';
                     $serverRequestData['data']['key']          = '40';
-                    $serverRequestData['data']['birth_date']   = $birthday;
+                    $serverRequestData['data']['birth_date']   = $requestData['nn_sepa_birthday'];
                     } else {                        
                     $serverRequestData['data']['payment_type'] = 'GUARANTEED_INVOICE';
                     $serverRequestData['data']['key']          = '41';

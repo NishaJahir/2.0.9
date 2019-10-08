@@ -1,4 +1,7 @@
 <script src="{{ plugin_path('Novalnet') }}/js/novalnet_sepa.js"></script>
+<script src="{{ plugin_path('Novalnet') }}/js/datePicker.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="{{ plugin_path('Novalnet') }}/css/date.css"></script>
 <form method="post" id="nn_sepa_form" name="nn_sepa_form" action="{{nnPaymentProcessUrl}}">
 	<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
 	<input type='hidden' id='nn_sepa_valid_dob_msg' id="nn_sepa_valid_dob_msg" value=value="{{trans("Novalnet::PaymentMethod.doberror")}}">
@@ -37,7 +40,8 @@
 								<div class="modal-title" style="color:#008EBF;"><b>{{trans("Novalnet::PaymentMethod.note")}}</b>{{trans("Novalnet::PaymentMethod.dobshowingreason")}}</div><br>
 		
 									<div data-model="nn_sepa_birthday" class="input-unit">
-										<input type="date" name="nn_sepa_birthday" id="nn_sepa_birthday">
+										<input type="text"  name="nn_sepa_birthday id="nn_sepa_birthday" class="form-control floating-label" placeholder="Date of Birth">
+										
 										<label for="nn_sepa_birthday">{{trans("Novalnet::PaymentMethod.birthdate_label")}}</label>
 									</div>
 								{% endif %}

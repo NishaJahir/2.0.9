@@ -182,7 +182,7 @@ class PaymentController extends Controller
                  $this->getLogger(__METHOD__)->error('sepa', $requestData['nn_sepa_birthday']);
                 } else {
                  $requestData['nn_invoice_birthday'] =    $requestData['nn_invoice_year'].'-'.$requestData['nn_invoice_month'].'-'.$requestData['nn_invoice_date'];   
-                $this->getLogger(__METHOD__)->error('sepa', $requestData['nn_invoice_birthday']);
+                $this->getLogger(__METHOD__)->error('invoice', $requestData['nn_invoice_birthday']);
                 }
                 $birthday     = ( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) ? $requestData['nn_sepa_birthday'] : $requestData['nn_invoice_birthday'];
                 $force_status = ( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) ? 'Novalnet.novalnet_sepa_payment_guarantee_force_active' : 'Novalnet.novalnet_invoice_payment_guarantee_force_active';               

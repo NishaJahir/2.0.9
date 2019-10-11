@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="{{ plugin_path('Novalnet') }}/js/jquery.js"></script>
 <script src="{{ plugin_path('Novalnet') }}/js/ui.js"></script>
 <script src="{{ plugin_path('Novalnet') }}/js/novalnet_invoice.js"></script>
@@ -25,10 +25,10 @@
 	</div>
 	 
 	<div class="col-sm-4">
-	   <select id="nn_month" type="text" name="nn_month" placeholder="Month" class="form-control">
+	   <select id="nn_invoice_month" type="text" name="nn_invoice_month" placeholder="Month" class="form-control">
 	   <option value="">Select a Month</option>
 	    {% for i in 1..12 %}
-    		<option value="{{i}}">{{ trans("Novalnet::PaymentMethod.month{{i}}") }}</option>
+    		<option value="{{i}}">{{ trans("Novalnet::PaymentMethod.month") }}"{{i}}"</option>
 	    {% endfor %}
            
 	   </select>

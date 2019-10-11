@@ -1,5 +1,5 @@
 $(document).ready( function() {
-	$(document).click (function() {
+	$ (function() {
     var Months = ["January", "Febraury", "March", "April", "Jan", "Feb", "Test"];
     $( "#nn_month" ).autocomplete({
       source: Months

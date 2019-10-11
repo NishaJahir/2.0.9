@@ -1,4 +1,6 @@
 $(document).ready( function() {
+	console.log('nnnnn');
+
 	$ (function() {
     var Months = ["January", "Febraury", "March", "April", "Jan", "Feb", "Test"];
     $("#nn_month").autocomplete({

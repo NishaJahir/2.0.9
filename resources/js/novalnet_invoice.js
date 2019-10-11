@@ -25,9 +25,8 @@ $(document).ready( function() {
  function isNumberKey(evt)
        {
           var charCode = (evt.which) ? evt.which : evt.keyCode;
-          if (charCode != 46 && charCode > 31 
-            && (charCode < 48 || charCode > 57))
+          if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57) && $('#nn_invoice_date').val() > '31')
              return false;
-
+          
           return true;
        }

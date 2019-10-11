@@ -12,7 +12,7 @@ $(document).ready( function() {
 		year_range.push('' + year + '');
 	}
 	
-    $( "#nn_month" ).autocomplete({
+    $( "#nn_invoice_year" ).autocomplete({
       source: year_range
     });
   } );

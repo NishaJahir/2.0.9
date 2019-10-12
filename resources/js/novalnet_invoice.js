@@ -9,7 +9,7 @@ $(document).ready( function() {
 	});
 
 	
-	$( function() {
+	
 	  let current_date = new Date();
 	  current_date.getFullYear();
 	  var max_year = current_date.getFullYear() - 18;	  
@@ -25,16 +25,17 @@ $(document).ready( function() {
     $( "#nn_invoice_year" ).autocomplete({
       source: year_range
     });
-  } );
+  
 
-              
+       
+	
+	$('#nn_invoice_form').on('submit', function() {
+		$('#novalnet_form_btn').attr('disabled',true);
+		       
 
 	if ($("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
 	alert('Enter the date of birth');
 	}
-	
-	$('#nn_invoice_form').on('submit', function() {
-		$('#novalnet_form_btn').attr('disabled',true);
 	});
 });
 

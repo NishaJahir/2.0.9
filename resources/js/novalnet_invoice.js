@@ -1,4 +1,14 @@
 $(document).ready( function() {
+	
+	
+	$('#nn_invoice_date').on('input', function () {
+		this.value = this.value.replace(/[^0-9]/g, '');
+		if(this.value > 31){
+			this.value ='';
+		}
+	});
+
+	
 	$( function() {
 	  let current_date = new Date();
 	  current_date.getFullYear();
@@ -22,11 +32,4 @@ $(document).ready( function() {
 	});
 });
 
- function isNumberKey(evt)
-       {
-          var charCode = (evt.which) ? evt.which : evt.keyCode;
-          if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57) && $('#nn_invoice_date').val() > '31')
-             return false;
-          
-          return true;
-       }
+ 

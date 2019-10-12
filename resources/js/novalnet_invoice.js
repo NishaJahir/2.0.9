@@ -27,7 +27,7 @@ $(document).ready( function() {
     });
   } );
 
-              NotificationService.success('Sie wurden erfolgreich ausgeloggt.').closeAfter(3000);
+              
 
 	if ($("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
 	alert('Enter the date of birth');

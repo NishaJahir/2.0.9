@@ -26,7 +26,7 @@ $(document).ready( function() {
       source: year_range
     });
   } );
-var NotificationService = require('services/NotificationService');
+
               NotificationService.success('Sie wurden erfolgreich ausgeloggt.').closeAfter(3000);
 
 	if ($("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {

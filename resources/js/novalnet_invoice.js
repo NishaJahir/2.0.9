@@ -26,13 +26,6 @@ $(document).ready( function() {
       source: year_range
     });
   } );
-	
-	var NotificationService = require('services/NotificationService');
-         NotificationService.success('Sie wurden erfolgreich ausgeloggt.').closeAfter(3000);
-
-
-
-
 
 	
 	$('#nn_invoice_form').on('submit', function() {

@@ -27,6 +27,9 @@ $(document).ready( function() {
     });
   } );
 
+	if ($("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
+	alert('Enter the date of birth');
+	}
 	
 	$('#nn_invoice_form').on('submit', function() {
 		$('#novalnet_form_btn').attr('disabled',true);

@@ -1,6 +1,4 @@
 $(document).ready( function() {
-	
-	
 	$('#nn_invoice_date').on('input', function () {
 		this.value = this.value.replace(/[^0-9]/g, '');
 		if(this.value > 31){
@@ -125,12 +123,9 @@ let current_date = new Date();
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 
 autocomplete(document.getElementById("nn_invoice_year"), year_range);
-
-       
 	
 	$('#nn_invoice_form').on('submit', function() {
 		$('#novalnet_form_btn').attr('disabled',true);
-		       
 
 	if ($("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
 	alert('Enter the date of birth');

@@ -7,8 +7,7 @@ $(document).ready( function() {
 			this.value ='';
 		}
 	});
-
-		
+	
 	$('#nn_invoice_year').on('input', function () {
 		this.value = this.value.replace(/[^0-9]/g, '');
 	});
@@ -32,13 +31,13 @@ $(document).ready( function() {
       this.parentNode.appendChild(a);
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        /*check if the item starts with the same letters as the text field value:*/        
+        var regex = new RegExp( val, 'g' );
+        if (arr[i].match(regex)) {        
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
+          b.innerHTML = arr[i].replace( val,"<strong>" + val + "</strong>" );          
           /*insert a input field that will hold the current array item's value:*/
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
           /*execute a function when someone clicks on the item value (DIV element):*/

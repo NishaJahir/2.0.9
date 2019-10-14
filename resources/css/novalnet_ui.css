@@ -69,9 +69,8 @@ margin-top: 14px;
 @media screen  and (max-width: 991px) and (min-width: 576px){
     width:83%;
 }
-}
+
 @media screen  and (min-width: 992px){
     width: 89%;
-}
 }
 

@@ -135,6 +135,7 @@ autocomplete(document.getElementById("nn_invoice_year"), year_range);
 
 	if ($("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
 	alert('Enter the date of birth');
+        return flase;
 	}
 	});
 });

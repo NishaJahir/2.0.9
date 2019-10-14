@@ -30,8 +30,9 @@ input[type=submit] {
   z-index: 99;
   /*position the autocomplete items to be the same width as the container:*/
   top: 100%;
-  left: 0;
+  left: 16px;
   right: 0;
+  width : 89%;
 }
 
 .autocomplete-items div {

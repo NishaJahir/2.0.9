@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="{{plugin_path('Novalnet')}}/css/ui.css">
-<script src="{{plugin_path('Novalnet')}}/js/jquery.js"></script>
 <script defer src="{{plugin_path('Novalnet')}}/js/novalnet_invoice.js"></script>
 
 <form method="post" id="nn_invoice_form" name="nn_invoice_form" action="{{nnPaymentProcessUrl}}">
@@ -33,7 +31,7 @@
 	   </select>
          </div>
   	
-	<div class="col-sm-4">
+	<div class="col-sm-4 autocomplete" style="width:300px;"">
 		<input type="text" name="nn_invoice_year" id="nn_invoice_year" maxlength="4" placeholder="Year" class="form-control">
 	</div>
 				

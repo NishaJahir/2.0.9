@@ -307,7 +307,7 @@ class NovalnetServiceProvider extends ServiceProvider
 																'nnPaymentProcessUrl' => $paymentProcessUrl,
 												'paymentName' => $paymentName,				
 												'paymentMopKey'     =>  $paymentKey,
-												'guarantee_force' => trim($config->get('Novalnet.' . strtolower($paymentKey) . '_payment_guarantee_force_active'));
+												'guarantee_force' => trim($config->get('Novalnet.' . strtolower($paymentKey) . '_payment_guarantee_force_active'))
 											
 											]); 												$contentType = 'htmlContent';
 											} else {

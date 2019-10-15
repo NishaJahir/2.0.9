@@ -116,12 +116,12 @@ let current_date = new Date();
 autocomplete(document.getElementById("nn_invoice_year"), year_range);
 	
 	$('#nn_invoice_form').on('submit', function() {
+        if ( $('#nn_invoice_guarantee_force').val() == 0 && ($("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ') ) ) {
+	alert('Enter the date of birth');
+	}
 		$('#novalnet_form_btn').attr('disabled',true);
 
-	//if ( !$('#nn_invoice_guarantee_force').val() && $("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
-	//alert('Enter the date of birth');
-       // return false;
-	//}
+	
 	});
 });
 

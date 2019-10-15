@@ -1,18 +1,24 @@
 $(document).ready( function() {
+	
 	$('#nn_invoice_date').on('input', function () {
 		this.value = this.value.replace(/[^0-9]/g, '');
 		if(this.value > 31){
 			this.value ='';
 		}
-		var year = $jQuery('#nn_invoice_year').val();
-		var leap = (year % 4 == 0 && year % 100 != 0);
-	        if ($jQuery('#nn_invoice_month').val() == '02' && ( (!leap && this.value > 29) || this.value > 28) ) {
-                this.value = '28';
-                }
 	});
 	
-	$('#nn_invoice_year').on('input', function () {
-		this.value = this.value.replace(/[^0-9]/g, '');
+	$( '#nn_invoice_year' ).keypress(function (event) {
+		var keycode = ( 'which' in event ) ? event.which : event.keyCode;	
+		var inputChar = String.fromCharCode( keycode );
+		reg = /^[0-9]+$/;
+        	var year_val = $( '#nn_invoice_year' ).val();
+        	var len = year_val.length;     
+      		
+		if ((len == 0 && (inputChar != 2 && inputChar != 1)) || (len == 1 && ((inputChar != 9 && year_val.charAt(0) == 1) || (inputChar != 0 && year_val.charAt(0) == 2))))
+		{
+		  return false;
+		} 
+		return reg.test(inputChar);
 	});
 	
   function autocomplete(inp, arr) {
@@ -92,7 +98,7 @@ $(document).ready( function() {
 let current_date = new Date();
 	  current_date.getFullYear();
 	  var max_year = current_date.getFullYear() - 18;	  
-	  var min_year = current_date.getFullYear() - 60;
+	  var min_year = current_date.getFullYear() - 100;
 	  
     var year_range = [];
     
@@ -105,10 +111,10 @@ autocomplete(document.getElementById("nn_invoice_year"), year_range);
 	$('#nn_invoice_form').on('submit', function() {
 		$('#novalnet_form_btn').attr('disabled',true);
 
-	if ( !$('#nn_invoice_guarantee_force').val() && $("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
-	alert('Enter the date of birth');
-        return false;
-	}
+	//if ( !$('#nn_invoice_guarantee_force').val() && $("#nn_invoice_year").val(' ') || $("#nn_invoice_month").val(' ') || $("#nn_invoice_date").val(' ')) {
+	//alert('Enter the date of birth');
+       // return false;
+	//}
 	});
 });
 

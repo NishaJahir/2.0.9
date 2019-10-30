@@ -148,6 +148,9 @@ class PaymentController extends Controller
         $basket = $this->basketRepository->load();  
         $billingAddressId = $basket->customerInvoiceAddressId;
         $address = $this->addressRepository->findAddressById($billingAddressId);
+        if ($option->typeId == 9) {
+							    $birthday = $option->value;
+							}
         $serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey']);
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $serverRequestData['data']);
         $guarantee_payments = [ 'NOVALNET_SEPA', 'NOVALNET_INVOICE' ];        
@@ -181,9 +184,11 @@ class PaymentController extends Controller
                  $requestData['nn_sepa_birthday'] =    $requestData['nn_sepa_year'].'-'.$requestData['nn_sepa_month'].'-'.$requestData['nn_sepa_date'];  
                  $this->getLogger(__METHOD__)->error('sepa', $requestData['nn_sepa_birthday']);
                 } else {
-                 $requestData['nn_invoice_birthday'] =    $requestData['nn_invoice_year'].'-'.$requestData['nn_invoice_month'].'-'.$requestData['nn_invoice_date'];   
+                 $requestData['nn_invoice_birthday'] =    !empty($birthday) ? $requestData['nn_invoice_year'].'-'.$requestData['nn_invoice_month'].'-'.$requestData['nn_invoice_date'] : $birthday;   
                 $this->getLogger(__METHOD__)->error('invoice', $requestData['nn_invoice_birthday']);
                 }
+                
+                
                 $birthday     = ( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) ? $requestData['nn_sepa_birthday'] : $requestData['nn_invoice_birthday'];
                 $force_status = ( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) ? 'Novalnet.novalnet_sepa_payment_guarantee_force_active' : 'Novalnet.novalnet_invoice_payment_guarantee_force_active';               
                 

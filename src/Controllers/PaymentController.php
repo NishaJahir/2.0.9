@@ -148,9 +148,11 @@ class PaymentController extends Controller
         $basket = $this->basketRepository->load();  
         $billingAddressId = $basket->customerInvoiceAddressId;
         $address = $this->addressRepository->findAddressById($billingAddressId);
-        if ($option->typeId == 9) {
-							    $birthday = $option->value;
-							}
+       foreach ($address->options as $option) {
+	    if ($option->typeId == 9) {
+	    $birthday = $option->value;
+	    }
+       }
         $serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey']);
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $serverRequestData['data']);
         $guarantee_payments = [ 'NOVALNET_SEPA', 'NOVALNET_INVOICE' ];        

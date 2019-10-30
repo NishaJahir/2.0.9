@@ -220,7 +220,8 @@ class NovalnetServiceProvider extends ServiceProvider
 						$basket = $basketRepository->load();			
 						$billingAddressId = $basket->customerInvoiceAddressId;
 						$address = $addressRepository->findAddressById($billingAddressId);
-			    			foreach ($address->options as $option) {
+			    $this->getLogger(__METHOD__)->error('address', $address);		
+			    foreach ($address->options as $option) {
 							if ($option->typeId == 12) {
 							    $name = $option->value;
 							}

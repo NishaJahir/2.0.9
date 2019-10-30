@@ -278,14 +278,17 @@ class NovalnetServiceProvider extends ServiceProvider
                                 else
                                 {
 				
-			
+			            if( empty($address->companyName) || empty($birthday)) {
+					   $show_birthday = true;
+				    }
+					    
 									$content = $twig->render('Novalnet::PaymentForm.NOVALNET_SEPA', [
                                                                     'nnPaymentProcessUrl' => $paymentProcessUrl,
                                                                     'paymentMopKey'     =>  $paymentKey,
 									'paymentName' => $paymentName,	
 								'birthday' => $birthday,		
 								'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
-                                                                    'nnGuaranteeStatus' =>  empty($address->companyName) ? $guaranteeStatus : ''
+                                                                    'nnGuaranteeStatus' =>  $show_birthday ? $guaranteeStatus : ''
                                                  ]);
                                 }
                             } else {

@@ -278,7 +278,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                 else
                                 {
 				
-			            if( empty($address->companyName) || empty($birthday)) {
+			            if( empty($address->companyName) && empty($birthday)) {
 					   $show_birthday = true;
 				    }
 					    
@@ -310,7 +310,7 @@ class NovalnetServiceProvider extends ServiceProvider
 											$processDirect = false;
 											
 											$paymentProcessUrl = $paymentService->getProcessPaymentUrl();
-											if (empty($address->companyName) ||  empty($birthday) ) {
+											if (empty($address->companyName) &&  empty($birthday) ) {
 											      
 												$content = $twig->render('Novalnet::PaymentForm.NOVALNET_INVOICE', [
 																'nnPaymentProcessUrl' => $paymentProcessUrl,

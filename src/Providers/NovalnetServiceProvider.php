@@ -225,6 +225,10 @@ class NovalnetServiceProvider extends ServiceProvider
 							if ($option->typeId == 12) {
 							    $name = $option->value;
 							}
+				                        if ($option->typeId == 9) {
+							    $birthday = $option->value;
+							}
+				    $this->getLogger(__METHOD__)->error('address1', $birthday);
 						}
 						$customerName = explode(' ', $name);
 						$firstname = $customerName[0];
@@ -279,7 +283,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                                                     'nnPaymentProcessUrl' => $paymentProcessUrl,
                                                                     'paymentMopKey'     =>  $paymentKey,
 									'paymentName' => $paymentName,	
-										
+								'birthday' => $birthday,		
 								'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
                                                                     'nnGuaranteeStatus' =>  empty($address->companyName) ? $guaranteeStatus : ''
                                                  ]);
@@ -308,6 +312,7 @@ class NovalnetServiceProvider extends ServiceProvider
 																'nnPaymentProcessUrl' => $paymentProcessUrl,
 												'paymentName' => $paymentName,				
 												'paymentMopKey'     =>  $paymentKey,
+												'birthday' => $birthday,
 												'guarantee_force' => trim($config->get('Novalnet.' . strtolower($paymentKey) . '_payment_guarantee_force_active'))
 											
 											]); 												$contentType = 'htmlContent';

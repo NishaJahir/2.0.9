@@ -307,12 +307,13 @@ class NovalnetServiceProvider extends ServiceProvider
 											$processDirect = false;
 											
 											$paymentProcessUrl = $paymentService->getProcessPaymentUrl();
-											if (empty($address->companyName)) {
-											$content = $twig->render('Novalnet::PaymentForm.NOVALNET_INVOICE', [
+											if (empty($address->companyName) ||  empty($birthday) ) {
+											      
+												$content = $twig->render('Novalnet::PaymentForm.NOVALNET_INVOICE', [
 																'nnPaymentProcessUrl' => $paymentProcessUrl,
 												'paymentName' => $paymentName,				
 												'paymentMopKey'     =>  $paymentKey,
-												'birthday' => $birthday,
+												
 												'guarantee_force' => trim($config->get('Novalnet.' . strtolower($paymentKey) . '_payment_guarantee_force_active'))
 											
 											]); 												$contentType = 'htmlContent';

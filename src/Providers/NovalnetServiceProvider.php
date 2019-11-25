@@ -105,8 +105,7 @@ class NovalnetServiceProvider extends ServiceProvider
     {
 
 	    
-	    $php_version = phpinfo();
-	    $this->getLogger(__METHOD__)->error('phpversion',$php_version);
+	  
 	    
         // Register the Novalnet payment methods in the payment method container
         $payContainer->register('plenty_novalnet::NOVALNET_INVOICE', NovalnetInvoicePaymentMethod::class,
